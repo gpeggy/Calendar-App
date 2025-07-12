@@ -2,23 +2,23 @@
 
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import Topbar from "@/components/Topbar";
+
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+
 
 // Import our custom components and types
 import AIAssistant from "@/components/AIAssistant"
 import EventModal from "@/components/EventModal"
 import { sampleEvents } from "@/data/sampleEvents"
-import type { CalendarEvent, ViewType } from "@/types/calendar"
+import type { CalendarEvent } from "@/types/calendar"
 
 export default function CalendarApp() {
   // State management with proper TypeScript types
   const [isLoaded, setIsLoaded] = useState<boolean>(false)
   const [showAIPopup, setShowAIPopup] = useState<boolean>(false)
-  const [currentView, setCurrentView] = useState<ViewType>("week")
   const [currentMonth] = useState<string>("March 2025")
-  const currentDate = "March 5"
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
 
   // Animation and AI popup timing
@@ -89,38 +89,7 @@ export default function CalendarApp() {
           className={`flex-1 flex flex-col transition-all duration-700 delay-200 ${isLoaded ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
         >
           {/* Calendar Controls - FIXED: Better backdrop */}
-          <div className="flex items-center justify-between p-4 border-b border-white/30 bg-white/10 backdrop-blur-md">
-            <div className="flex items-center gap-4">
-              <button className="px-4 py-2 text-white bg-blue-500/90 rounded-lg hover:bg-blue-600/90 transition-colors font-medium shadow-lg border border-blue-400/30">
-                Today
-              </button>
-              <div className="flex border border-white/30 rounded-lg overflow-hidden">
-                <button className="p-2 text-white hover:bg-white/20 transition-colors">
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button className="p-2 text-white hover:bg-white/20 transition-colors">
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-              <h2 className="text-xl font-bold text-white drop-shadow-lg">{currentDate}</h2>
-            </div>
-
-            <div className="flex items-center gap-1 rounded-lg p-1 bg-white/15 backdrop-blur-sm border border-white/30">
-              {(["day", "week", "month"] as ViewType[]).map((view) => (
-                <button
-                  key={view}
-                  onClick={() => setCurrentView(view)}
-                  className={`px-4 py-2 rounded-md capitalize transition-all duration-200 font-medium ${
-                    currentView === view
-                      ? "bg-white/30 text-white shadow-md"
-                      : "hover:bg-white/20 text-white/80 hover:text-white"
-                  } text-sm`}
-                >
-                  {view}
-                </button>
-              ))}
-            </div>
-          </div>
+          <Topbar />
 
           {/* Week View - FIXED: Better contrast and visibility */}
           <div className="flex-1 overflow-auto p-4">
