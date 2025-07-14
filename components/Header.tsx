@@ -1,5 +1,6 @@
 import { Search, Settings, Menu } from "lucide-react"
-
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 const Header = () => {
   // Set isLoaded to true by default; adjust logic as needed
   const isLoaded = true;
@@ -24,9 +25,14 @@ const Header = () => {
             />
           </div>
           <Settings className="h-6 w-6 text-white drop-shadow-lg cursor-pointer hover:text-white/80 transition-colors" />
-          <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shadow-lg border-2 border-white/20">
-            U
-          </div>
+          <SignedIn>
+          <UserButton/>
+          </SignedIn>
+          <SignedOut>
+          <Link href={"/sign-in"} className="text-white hover:text-white/80 transition-colors rounded-2xl border border-white/30 px-4 py-2">
+            Sign in
+          </Link>
+          </SignedOut>
         </div>
       </header>
   )
